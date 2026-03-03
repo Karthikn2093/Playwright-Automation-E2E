@@ -71,5 +71,11 @@ test('Add products', async ({ page }) => {
 
   await expect(page.getByRole('link', {name: 'Proceed to checkout'})).toBeVisible();
 
-  
+  await page.getByRole('link', {name: 'Proceed to checkout'}).click();
+
+  await expect(page.getByRole('heading', {name: 'Shopping-cart summary'})).toBeVisible();
+  await page.getByRole('link', {name: 'Proceed to checkout'}).click();
+  await expect(page).toHaveTitle('Address - Automation Practice');
+
+  await page.getByRole('button', {name: 'Save'}).click();
 });
