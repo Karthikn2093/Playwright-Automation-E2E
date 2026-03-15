@@ -1,7 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-//All Page object classes extend this class
-
 export class BasePage {
     protected page: Page;
 
@@ -13,7 +11,7 @@ export class BasePage {
         await this.page.goto(path);
     }
 
-    async clickByRole(role: 'link' | 'button' | 'heading', name: string, exact: false): Promise<void> {
+    async clickByRole(role: 'link' | 'button' | 'heading', name: string, exact: boolean = false): Promise<void> {
         await this.page.getByRole(role, { name, exact }).click();
     }
 
@@ -32,4 +30,14 @@ export class BasePage {
     async waitForLocator(locator: Locator): Promise<void> {
         await locator.waitFor();
     }
+
+    async selectDropDownOption(locator: Locator, value: string): Promise<void> {
+        await locator.selectOption(value);
+    }
+
+    async selectCustomDropdownOption(locator: Locator, value: string): Promise<void> {
+        await locator.click();
+        await this.page.getByRole('list', { name: value }).click();
+    }
+
 }
